@@ -21,35 +21,32 @@ void drive(int speed, int duration) {
 }
 
 void turnLeft(int angle, int speed) {
-  rearLeft.write((1-speed)*90);
- //  Serial.println(digitalRead(4));
-Serial.print("4");
-//  Serial.println(digitalRead(7)); rearRight.write((1+speed)*90);
+  rearLeft.write((1-speed)*65);
     delay(angle * 2);
   }
   void turnRight(int angle, int speed) {
-  rearLeft.write((1+speed)*90);
-  rearRight.write(1-speed*90);
+  rearLeft.write((1+speed)*65);
+  rearRight.write(1-speed*65);
     delay(angle * 2);
   }
 
   void drive(int leftSpeed, int rightSpeed, int duration) {
-  rearLeft.write((1+leftSpeed)*90);
-  rearRight.write((1+rightSpeed)*90);
+  rearLeft.write((1+leftSpeed)*65);
+  rearRight.write((1+rightSpeed)*65);
   delay(duration);
 }
 void followLine(int duration) {
   static int elapsedTime = 0;
   while (elapsedTime < duration) {
     updateSensors();
-    if (leftSens < lineThreshold && rightSens < lineThreshold && centerSens > lineThreshold) {
-      drive(1, 10);
-    } else if (leftSens > lineThreshold && rightSens < lineThreshold) {
-      drive(-1, 1, 10);
-    } else if (leftSens < lineThreshold && rightSens > lineThreshold) {
-      drive(1, -1, 10);
+    if (leftSens == 0 && rightSens == 0 && centerSens == 1) {
+      drive(1, 10);//drive straight
+    } else if (leftSens == 1 && rightSens == 0) {
+      drive(1, -1, 10);//turn right
+    } else if (leftSens == 0 && rightSens == 1) {
+      drive(-1, 1, 10);//turn left
     } else {
-      drive(1, 10);
+      drive(1, 10);//drive forward
     }
     elapsedTime++;
   }
@@ -60,12 +57,11 @@ void setup() {
   rearRightPin = 10;
   rearLeft.attach(9);
   rearRight.attach(10);
+  leftSensPin = 7;
+  rightSensPin = 2;
+  centerSensPin = 4;
 }
 
 void loop() {
-  //rearLeft.write(150);
-  //rearRight.write(30);
   drive(1, 100);
-  //turnRight(1, 1);
-
 }
