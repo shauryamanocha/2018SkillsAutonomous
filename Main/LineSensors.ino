@@ -2,13 +2,13 @@ static int leftSens, centerSens, rightSens;
 int leftSensPin, centerSensPin, rightSensPin;
 int lineThreshold;
 
-void updateSensors() {
+ void updateSensors(); {
   leftSens = digitalRead(leftSensPin);
   rightSens = digitalRead(rightSensPin);
   centerSens = digitalRead(centerSensPin);
 }
 
-void followLine(int duration) {
+ void followLine(int duration); {
   static int elapsedTime = 0;
   while (elapsedTime < duration) {
     updateSensors();

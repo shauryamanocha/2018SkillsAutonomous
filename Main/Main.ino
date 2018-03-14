@@ -1,8 +1,8 @@
 #include <Servo.h>
+//#include <Servos>
+//#include<LineSensors>
 
 void setup() {
-  leftDrivePin = 9;
-  rightDrivePin = 10;
   leftDrive.attach(leftDrivePin);
   rightDrive.attach(rightDrivePin);
 }
